@@ -1,3 +1,4 @@
+import pytest
 from times import compute_overlap_time, time_range
 def test_given_input():
     large = time_range("2010-01-12 10:00:00", "2010-01-12 12:00:00")
@@ -37,3 +38,10 @@ def test_touching_intervals():
     result = compute_overlap_time(range1, range2)
     expected = [("2010-01-12 11:00:00","2010-01-12 11:00:00")]
     assert result == expected
+
+def test_time_range_inorder():
+    start_time = "2010-01-12 10:15:00"
+    end_time = "2010-01-12 10:00:00"
+
+    with pytest.raises(ValueError, match="end_time must be after start_time"):
+        time_range(start_time, end_time)
